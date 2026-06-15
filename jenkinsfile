@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/piyushchoudhary2005/craft.git'
+            }
+        }
+
+        stage('Install') {
+            steps {
+                bat 'npm install'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                bat 'npm run build'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                bat 'npm run lint'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                bat 'docker build -t crafts .'
+            }
+        }
+    }
+}
