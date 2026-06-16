@@ -37,5 +37,11 @@ pipeline {
                 bat 'docker build -t crafts .'
             }
         }
+
+        stage('Docker Run (Optional)') {
+            steps {
+                bat 'docker run -d -p 3000:3000 crafts'
+            }
+        }
     }
 }
