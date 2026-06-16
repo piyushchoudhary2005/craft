@@ -1,28 +1,34 @@
 pipeline {
     agent any
 
+    tools {
+        sonarQube 'SonarScanner'
+    }
+
     stages {
+
         stage('Checkout') {
             steps {
                 git 'https://github.com/piyushchoudhary2005/craft.git'
             }
         }
 
-        stage('Install') {
+        stage('SonarQube Analysis') {
             steps {
-                bat 'npm install'
+                withSonarQubeEnv('SonarQube') {
+                    bat """
+                    sonar-scanner ^
+                    -Dsonar.projectKey=crafts ^
+                    -Dsonar.sources=src
+                    """
+                }
             }
         }
 
         stage('Build') {
             steps {
+                bat 'npm install'
                 bat 'npm run build'
-            }
-        }
-
-        stage('SonarQube Analysis') {
-            steps {
-                bat 'npm run lint'
             }
         }
 
