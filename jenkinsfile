@@ -34,13 +34,13 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                bat 'docker build -t crafts .'
+                bat 'docker build -t craftss .'
             }
         }
 
         stage('Docker Run (Optional)') {
             steps {
-                bat 'docker run -d -p 3000:3000 crafts'
+                bat 'docker run -d -p 3000:3000 craftss'
             }
         }
     }
